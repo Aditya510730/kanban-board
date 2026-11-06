@@ -57,14 +57,17 @@ function App() {
   }
 
   async function handleDelete(id: string) {
-  const previous = tasks
-  setTasks(prev => prev.filter(t => t.id !== id)) // remove instantly
-  const { error } = await supabase.from('tasks').delete().eq('id', id)
-  if (error) {
-    setTasks(previous) // roll back if it failed
-    setError('Could not delete task. Please try again.') // use your existing error state
+    setMoveError(null)
+    const previous = tasks
+    setTasks(prev => prev.filter(t => t.id !== id)) // remove instantly
+
+    const { error } = await supabase.from('tasks').delete().eq('id', id)
+
+    if (error) {
+      setTasks(previous) // roll back if it failed
+      setMoveError("Couldn't delete that task. Please try again.")
+    }
   }
-}
 
   async function handleDragEnd(event: DragEndEvent) {
     setActiveTask(null)
@@ -235,6 +238,7 @@ function App() {
               status={col.status}
               label={col.label}
               tasks={filteredTasks.filter(t => t.status === col.status)}
+              onDelete={handleDelete}
             />
           ))}
         </div>

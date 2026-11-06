@@ -23,13 +23,13 @@ export function TaskCardView({ task, onDelete }: ViewProps) {
       className="group relative rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition duration-200 hover:-translate-y-0.5 hover:shadow-md"
       onMouseLeave={() => setConfirming(false)}
     >
-      {onDelete && !confirming && (
+        {onDelete && !confirming && (
         <button
           type="button"
           aria-label={`Delete task ${task.title}`}
           {...stop}
           onClick={() => setConfirming(true)}
-          className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-md text-sm text-black/30 opacity-0 transition hover:bg-red-50 hover:text-red-600 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-red-300 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
+          className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-md text-sm text-black/25 transition hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
         >
           ✕
         </button>
