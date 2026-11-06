@@ -5,8 +5,8 @@ import { PRIORITY_STYLES, getDueInfo } from '../utils'
 export function TaskCardView({ task }: { task: Task }) {
   const due = getDueInfo(task.due_date, task.status)
 
-  return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-md">
+    return (
+    <div className="rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
       <p className="text-sm font-medium text-slate-900">{task.title}</p>
       {task.description && (
         <p className="mt-1 line-clamp-2 text-xs text-slate-500">
@@ -39,7 +39,7 @@ export default function TaskCard({ task }: { task: Task }) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className={`mb-2 cursor-grab touch-none ${isDragging ? 'opacity-40' : ''}`}
+      className={`card-in mb-2 cursor-grab touch-none transition-opacity ${isDragging ? 'opacity-40' : ''}`}
     >
       <TaskCardView task={task} />
     </div>

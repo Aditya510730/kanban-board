@@ -105,10 +105,10 @@ function App() {
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl p-6">
-        <div className="mb-6 h-8 w-32 animate-pulse rounded bg-slate-200" />
+        <div className="mb-6 h-10 w-40 animate-pulse rounded-lg bg-black/5" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {[0, 1, 2, 3].map(i => (
-            <div key={i} className="h-72 animate-pulse rounded-xl bg-slate-200" />
+            <div key={i} className="h-72 animate-pulse rounded-xl bg-black/5" />
           ))}
         </div>
       </div>
@@ -122,7 +122,7 @@ function App() {
         <p className="mt-2 text-sm text-red-600">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+          className="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
         >
           Try again
         </button>
@@ -131,11 +131,11 @@ function App() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl p-6">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="mx-auto max-w-7xl p-6 md:p-10">
+      <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">My Board</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-4xl font-bold tracking-tight">My Board</h1>
+          <p className="mt-1 text-sm text-black/50">
             {tasks.length === 0
               ? 'Add your first task to get started'
               : 'Drag cards between columns to update their status'}
@@ -144,7 +144,7 @@ function App() {
         {!showForm && (
           <button
             onClick={() => setShowForm(true)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700"
+            className="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700"
           >
             + New task
           </button>
@@ -159,9 +159,9 @@ function App() {
         ].map(s => (
           <div
             key={s.label}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2"
+            className="rounded-lg bg-white px-3 py-2 shadow-[0_1px_3px_rgba(0,0,0,0.06)] ring-1 ring-black/5"
           >
-            <p className="text-xs text-slate-500">{s.label}</p>
+            <p className="text-xs text-black/50">{s.label}</p>
             <p className={`text-xl font-semibold ${s.style}`}>{s.value}</p>
           </div>
         ))}
@@ -172,12 +172,12 @@ function App() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search tasks..."
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm sm:w-64"
+          className="w-full rounded-lg bg-white px-3 py-2 text-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] ring-1 ring-black/10 transition placeholder:text-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-64"
         />
         <select
           value={priorityFilter}
           onChange={e => setPriorityFilter(e.target.value as Priority | 'all')}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+          className="rounded-lg bg-white px-3 py-2 text-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)] ring-1 ring-black/10 transition focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="all">All priorities</option>
           <option value="high">High</option>
@@ -229,8 +229,14 @@ function App() {
           ))}
         </div>
 
-        <DragOverlay>
-         {activeTask ? <TaskCardView task={activeTask} /> : null}
+        <DragOverlay
+          dropAnimation={{ duration: 220, easing: 'cubic-bezier(0.2, 0, 0, 1)' }}
+        >
+          {activeTask ? (
+            <div className="rotate-2 cursor-grabbing shadow-xl">
+              <TaskCardView task={activeTask} />
+            </div>
+          ) : null}
         </DragOverlay>
       </DndContext>
     </div>
