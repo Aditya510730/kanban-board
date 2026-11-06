@@ -56,6 +56,16 @@ function App() {
     setActiveTask(task ?? null)
   }
 
+  async function handleDelete(id: string) {
+  const previous = tasks
+  setTasks(prev => prev.filter(t => t.id !== id)) // remove instantly
+  const { error } = await supabase.from('tasks').delete().eq('id', id)
+  if (error) {
+    setTasks(previous) // roll back if it failed
+    setError('Could not delete task. Please try again.') // use your existing error state
+  }
+}
+
   async function handleDragEnd(event: DragEndEvent) {
     setActiveTask(null)
 

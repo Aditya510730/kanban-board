@@ -33,9 +33,10 @@ type Props = {
   status: Status
   label: string
   tasks: Task[]
+  onDelete: (id: string) => void
 }
 
-export default function Column({ status, label, tasks }: Props) {
+export default function Column({ status, label, tasks, onDelete }: Props) {
   const { setNodeRef, isOver } = useDroppable({ id: status })
   const s = STYLES[status]
 
@@ -61,7 +62,9 @@ export default function Column({ status, label, tasks }: Props) {
           Drop tasks here
         </div>
       ) : (
-        tasks.map(task => <TaskCard key={task.id} task={task} />)
+        tasks.map(task => (
+          <TaskCard key={task.id} task={task} onDelete={onDelete} />
+        ))
       )}
     </div>
   )
